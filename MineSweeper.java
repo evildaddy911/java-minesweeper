@@ -16,6 +16,7 @@ public class MineSweeper extends Applet implements MouseListener
     boolean dead = false; // if player has hit a mine
     boolean win = false; // if the player has won
     int X = 20, Y = 20; // how many square horisontal and vertically
+    long startTime; // stores the time player started game
 
     public void init ()
     {
@@ -67,6 +68,7 @@ public class MineSweeper extends Applet implements MouseListener
 	bufferI = new BufferedImage (this.getWidth (), this.getHeight (), BufferedImage.TYPE_3BYTE_BGR);
 	bufferG = bufferI.getGraphics ();
 	this.addMouseListener (this); // attaches the MouseListener to the applet
+	startTime = System.currentTimeMillis ();
     } // init method
 
 
@@ -92,6 +94,9 @@ public class MineSweeper extends Applet implements MouseListener
 	}
 	else if (win)
 	{
+	    long finishTime = System.currentTimeMillis ();
+	    String overall = Long.toString (finishTime - startTime); // stores how long the game took in a string for easier formatting
+
 	    bufferG.setColor (Color.green);
 	    for (int i = 0 ; i < numMines ; i++)
 	    {
@@ -99,6 +104,7 @@ public class MineSweeper extends Applet implements MouseListener
 	    }
 	    bufferG.setColor (Color.black);
 	    bufferG.drawString ("You Win!", 10, 20);
+	    bufferG.drawString ("Time taken: " + overall.substring (0, overall.length () - 3) + "." + overall.substring (overall.length () - 3, overall.length ()) + "s", 10, 40);
 	}
 	else
 	{
@@ -118,13 +124,13 @@ public class MineSweeper extends Applet implements MouseListener
 		    }
 		}
 	    }
-	}
-	bufferG.setColor (Color.black);
-	for (int x = 0 ; x < X ; x++)
-	{
-	    for (int y = 0 ; y < Y ; y++)
+	    bufferG.setColor (Color.black);
+	    for (int x = 0 ; x < X ; x++) // draw the outlines of each box
 	    {
-		bufferG.drawRect (x * 30, y * 30, 30, 30); // draws the outlines of each box
+		for (int y = 0 ; y < Y ; y++)
+		{
+		    bufferG.drawRect (x * 30, y * 30, 30, 30);
+		}
 	    }
 	}
 	g.drawImage (bufferI, 0, 0, null); // draws the image to the screen

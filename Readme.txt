@@ -7,4 +7,4 @@ If the number is zero, the game will automatically click the surrounding squares
 If you can uncover all the squares without finding a mine, you win!
 
 Source code is in the 'MineSweeper.java' file
-Open the .html file to begin the game
+Open the .html file to begin the game (the .class file is required for this)
